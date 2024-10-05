@@ -127,7 +127,7 @@ export default function MintingSection() {
             <div className="flex gap-4 max-sm:flex-col">
               <div className="max-sm:items-center max-sm:flex max-sm:flex-col">
                 <p className="text-[30px] single-day-regular text-white">
-                  Date: Saturday 10/05
+                  Date: Sunday 10/06
                 </p>
                 <p className="text-[30px] single-day-regular text-white">
                   Time: 12:00 PM EST
@@ -142,7 +142,7 @@ export default function MintingSection() {
                   No max per wallet
                 </p>
                 <p className="text-[30px] single-day-regular text-white">
-                  Duration: 33 Hours
+                  Duration: 9 Hours
                 </p>
               </div>
               {/* <div className="max-w-[200px] max-sm:items-center max-sm:flex max-sm:flex-col max-sm:max-w-full">
