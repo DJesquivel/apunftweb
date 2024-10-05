@@ -40,7 +40,7 @@ export default function Faq() {
     {
       question: "When will the minting start?",
       answer:
-        "Early Access for Whitelisted Wallets will begin Saturday 10/05 at 12:00 PM EST and will last 33 hours. Public Mint will begin Sunday 10/06 at 9:00 PM EST.",
+        "Early Access for Whitelisted Wallets will begin Sunday 10/06 at 12:00 PM EST and will last 9 hours. Public Mint will begin Sunday 10/06 at 9:00 PM EST.",
     },
 
     {
