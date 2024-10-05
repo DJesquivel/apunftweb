@@ -5,8 +5,8 @@ import Countdown from 'react-countdown';
 import { useEffect, useState } from "react";
 
 export default function TitleSection() {
-  const launchDate = '2024-10-05T16:00:00Z';
-  const whiteListDuration = 33 * 60 * 60 * 1000;
+  const launchDate = '2024-10-06T16:00:00Z';
+  const whiteListDuration = 9 * 60 * 60 * 1000;
   const [countdownDate, setCountdownDate] = useState(0);
   const [showSecondaryCountdown, setShowSecondaryCountdown] = useState(false);
   const [showPublic, setShowPublic] = useState(false);
