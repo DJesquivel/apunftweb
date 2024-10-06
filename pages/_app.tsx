@@ -2,7 +2,6 @@ import { AppKit } from "@/components/Web3Instance";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { ToastContainer } from "react-toastify";
 
 export const metadata = {
   title: "AppKit",
@@ -52,7 +51,6 @@ export default function App({ Component, pageProps }: AppProps) {
           type="image/x-icon"
         />
       </Head>
-      <ToastContainer />
       <Component {...pageProps} />
     </AppKit>
   );

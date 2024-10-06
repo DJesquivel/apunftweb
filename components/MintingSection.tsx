@@ -1,7 +1,5 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import TransactionNotification from "./utils/TransactionNotification";
-import Loader from "./utils/Loader";
 import Header from "./Header";
 import {
   useWeb3ModalAccount,
@@ -9,7 +7,6 @@ import {
 } from "@web3modal/ethers5/react";
 import Link from "next/link";
 import { ethers } from "ethers";
-import NFT_ABI from "../contract/ABI.json";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -28,10 +25,8 @@ import Slide10 from "@/public/images/56.png";
 import Slide11 from "@/public/images/6.png";
 import Slide12 from "@/public/images/62.png";
 import Slide13 from "@/public/images/7.png";
-import { checkWalletHoldings } from "./utils/checkWalletHoldings";
 
 export default function MintingSection() {
-  const { address: connectedAddress, isConnected } = useWeb3ModalAccount();
   const { address } = useWeb3ModalAccount();
   const { walletProvider } = useWeb3ModalProvider();
   const [quantity, setQuantity] = useState<string>("1");
@@ -39,94 +34,55 @@ export default function MintingSection() {
   const [currentSup, setCurrentSupp] = useState<string>("");
   const [totalSup, setTotalSupp] = useState<string>("");
   const [isMinting, setIsMinting] = useState<boolean>(false);
-  const [holdings, setHoldings] = useState<any[]>([]);
 
-  const contractAddress = "0x39fefC6127E8478C591a3e5771110ffa6b21c28c";
+  //   const contractAddress = "";
+  const contractAddress = "";
   const collUrl = ``;
 
-  const { notifyTransactionSuccess, notifyTransactionFailed } =
-    TransactionNotification();
+  // const mintFunc = async () => {
+  //   setIsMinting(true);
+  //   try {
+  //     if (walletProvider) {
+  //       const provider = new ethers.providers.Web3Provider(walletProvider);
+  //       const signer = provider.getSigner();
+  //       const contract = new ethers.Contract(contractAddress, NFT_ABI, signer);
+  //       // Define the amount to send (in ethers)
+  //       const amountToSend = ethers.utils.parseEther("0");
+  //       const tx = await contract.batchMintNFT(address, quantity, {
+  //         value: amountToSend, // Include the value for the transaction
+  //       });
+  //       const result = await tx.wait();
+  //       console.log(result, "Result");
+  //       setTokenId(result?.transactionHash);
+  //       supply();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setIsMinting(false);
+  //   }
+  // };
 
-  const mintFunc = async () => {
-    setIsMinting(true);
-    try {
-      if (walletProvider) {
-        const provider = new ethers.providers.Web3Provider(walletProvider);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(contractAddress, NFT_ABI, signer);
-        // Define the amount to send (in ethers)
-        // const amountToSend = ethers.utils.parseEther("0");
-        const amountToSend =
-          apuToken && parseFloat(apuToken.balance) > 0
-            ? ethers.utils.parseEther("0.5") // 0.5 ETH if APU balance is > 0
-            : ethers.utils.parseEther("0.7"); // 0.7 ETH if APU balance is 0
-        const tx = await contract.batchMintNFT(address, quantity, {
-          value: amountToSend, // Include the value for the transaction
-        });
-        const result = await tx.wait();
-        console.log(result, "Result");
-        setTokenId(result?.transactionHash);
-        notifyTransactionSuccess();
-        supply();
-      }
-    } catch (error) {
-      console.log(error);
-      notifyTransactionFailed();
-    } finally {
-      setIsMinting(false);
-    }
-  };
+  // const supply = async () => {
+  //   try {
+  //     if (walletProvider) {
+  //       const provider = new ethers.providers.Web3Provider(walletProvider);
+  //       const signer = provider.getSigner();
+  //       const contract = new ethers.Contract(contractAddress, NFT_ABI, signer);
+  //       const current = await contract.currentSupply();
+  //       setCurrentSupp(Number(current).toString());
+  //       const total = await contract.TOTAL_SUPPLY();
+  //       setTotalSupp(Number(total).toString());
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const supply = async () => {
-    try {
-      if (walletProvider) {
-        const provider = new ethers.providers.Web3Provider(walletProvider);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(contractAddress, NFT_ABI, signer);
-        const current = await contract.currentSupply();
-        setCurrentSupp(Number(current).toString());
-        const total = await contract.TOTAL_SUPPLY();
-        setTotalSupp(Number(total).toString());
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchHoldings = async (walletAddress: string) => {
-    try {
-      const holding = await checkWalletHoldings(walletAddress);
-
-      const holdingsArray = Object.entries(holding as object).map(
-        ([tokenName, details]) => ({
-          tokenName,
-          ...details,
-        })
-      );
-
-      setHoldings(holdingsArray);
-
-      // console.log(holdingsArray, "Holdings Array");
-    } catch (error) {
-      console.error("Failed to fetch holdings:", error);
-      setHoldings([]); // Clear holdings if an error occurs
-    }
-  };
-  const apuToken = holdings.find((token) => token.tokenName === "APU");
-  // Determine the price based on the APU balance
-  const price = apuToken && parseFloat(apuToken.balance) > 0 ? 0.5 : 0.7;
-  // console.log(holdings, "holdings");
-
-  useEffect(() => {
-    if (connectedAddress && isConnected) {
-      fetchHoldings(connectedAddress); // Fetch holdings for connected address
-    }
-  }, [connectedAddress, isConnected]);
-
-  useEffect(() => {
-    supply();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address]);
+  // useEffect(() => {
+  //   supply();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [address]);
 
   const slides = [
     Slide1,
@@ -169,13 +125,13 @@ export default function MintingSection() {
             <div className="flex gap-4 max-sm:flex-col">
               <div className="max-sm:items-center max-sm:flex max-sm:flex-col">
                 <p className="text-[30px] single-day-regular text-white">
-                  Date: Saturday 10/05
+                  Date: Sunday 10/06
                 </p>
                 <p className="text-[30px] single-day-regular text-white">
                   Time: 12:00 PM EST
                 </p>
                 <p className="text-[30px] single-day-regular text-white">
-                  Price: {price}e (ETH gas fees apply)
+                  Price: .05e (ETH gas fees apply)
                 </p>
                 <p className="text-[30px] single-day-regular text-white">
                   Max per mint: 10
@@ -184,7 +140,7 @@ export default function MintingSection() {
                   No max per wallet
                 </p>
                 <p className="text-[30px] single-day-regular text-white">
-                  Duration: 33 Hours
+                  Duration: 9 Hours
                 </p>
               </div>
               {/* <div className="max-w-[200px] max-sm:items-center max-sm:flex max-sm:flex-col max-sm:max-w-full">
@@ -262,7 +218,7 @@ export default function MintingSection() {
               (ETH gas fees apply)
             </p>
             <Header />
-            {address && (
+            {/* {address && (
               <p className="bg-[#050923] text-[#00d8ff] text-xl shadow-custom-blue single-day-regular px-4 py-2 border border-[#5dccff] rounded-lg">
                 {address ? address : ""}
               </p>
@@ -301,13 +257,9 @@ export default function MintingSection() {
                 onClick={mintFunc}
                 disabled={isMinting}
               >
-                {isMinting ? (
-                  <Loader loading={isMinting} size="default" />
-                ) : (
-                  "Mint"
-                )}
+                {isMinting ? "Minting..." : "Mint"}
               </button>
-            )}
+            )}  */}
           </div>
         </div>
         <div className="h-[1px] bg-white w-full my-6"></div>
